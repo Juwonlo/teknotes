@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:teknotes/utils/constants.dart';
-import '../../utils/components.dart';
+import 'package:teknotes/common/components.dart';
+import 'package:teknotes/common/constants.dart';
+
 
 class Documentation2 extends StatefulWidget {
   const Documentation2({Key? key}) : super(key: key);
@@ -10,12 +11,16 @@ class Documentation2 extends StatefulWidget {
 }
 
 class _Documentation2State extends State<Documentation2> {
+  // List<Note> notes = [];
+  String content = '';
+  String? title = null;
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 45,),
         Row(
           children: [
             GestureDetector(
@@ -28,7 +33,7 @@ class _Documentation2State extends State<Documentation2> {
                   borderRadius: BorderRadius.circular(2),
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(3),
+                  padding: const EdgeInsets.all(3),
                   child: const Icon(
                     Icons.arrow_back_outlined,
                     color: Colors.white,
@@ -37,20 +42,20 @@ class _Documentation2State extends State<Documentation2> {
                 ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(width: 20,),
             PrimaryText(
               text: 'Documents Name',
               size: 20,
               color: AppColor.secondaryColor,
               fontWeight: FontWeight.bold,
             ),
-            const Spacer(),
+            const SizedBox(width: 9),
             GestureDetector(
               onTap: () {
                 showDialog(context: context, builder: (context) => const NameBox());
               },
               child: SizedBox(
-                height: 28,
+                height: 25,
                 // width: 7,
                 child: Image.asset(
                   'assets/images/page-1.png',
@@ -58,13 +63,11 @@ class _Documentation2State extends State<Documentation2> {
                 ),
               ),
             ),
-            const Spacer(
-              flex: 3,
-            ),
+            const SizedBox(width: 75,),
             GestureDetector(
               onTap: () {},
               child: SizedBox(
-                height: 28,
+                height: 25,
                 width: 7,
                 child: Image.asset(
                   'assets/images/menu.png',
@@ -166,6 +169,7 @@ class _Documentation2State extends State<Documentation2> {
           padding: const EdgeInsets.symmetric(vertical: 30.0),
           child: Expanded(
             child: TextFormField(
+              onChanged: (value) => content = value,
               keyboardType: TextInputType.multiline,
               maxLines: null,
               cursorColor: Colors.black,
@@ -177,48 +181,56 @@ class _Documentation2State extends State<Documentation2> {
             ),
           ),
         ),
-        const Spacer(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {},
-              child: SizedBox(
-                height: 28,
-                child: Image.asset(
-                  'assets/images/vector-eHs.png',
-                  fit: BoxFit.fill,
+        const SizedBox(height: 500,),
+        Positioned(
+          bottom: 30,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: SizedBox(
+                  height: 28,
+                  child: Image.asset(
+                    'assets/images/vector-eHs.png',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              width: 30,
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: SizedBox(
-                height: 28,
-                child: Image.asset(
-                  'assets/images/vector-byo.png',
-                  fit: BoxFit.fill,
+              const SizedBox(
+                width: 30,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: SizedBox(
+                  height: 28,
+                  child: Image.asset(
+                    'assets/images/vector-byo.png',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              width: 30,
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: SizedBox(
-                height: 28,
-                child: Image.asset(
-                  'assets/images/frame-56304.png',
-                  fit: BoxFit.fill,
+              const SizedBox(
+                width: 30,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: SizedBox(
+                  height: 28,
+                  child: Image.asset(
+                    'assets/images/frame-56304.png',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-          ],
-        )
+            ],
+          ),
+        ),
+        AppButton(
+            onTap: (){
+          Navigator.pop(context, Note(content, title!));
+        },
+            child: PrimaryText(text: 'save',))
       ],
     ));
   }

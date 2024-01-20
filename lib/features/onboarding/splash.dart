@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:teknotes/onboard/sign_up.dart';
-import 'package:teknotes/utils/constants.dart';
+import 'package:teknotes/common/constants.dart';
+import 'package:teknotes/features/onboarding/onboarding_screen.dart';
 
-class Splash extends StatefulWidget {
-  const Splash({super.key});
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<Splash> createState() => _SplashState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashState extends State<Splash> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     decideNav();
@@ -20,7 +21,7 @@ class _SplashState extends State<Splash> {
     Future.delayed(
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const SignUP())));
+            context, MaterialPageRoute(builder: (context) => const OnboardingScreen())));
   }
 
 

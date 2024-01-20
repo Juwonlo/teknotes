@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 //Teknotes default app button
@@ -7,13 +8,11 @@ class AppButton extends StatelessWidget {
   final GestureTapCallback onTap;
   final Widget child;
   final Color? backgroundColor;
-   final Color borderColor;
    final double borderWidth;
    const AppButton({Key? key,
      required this.onTap,
      required this.child,
      this.backgroundColor,
-     this.borderColor = Colors.transparent,
      this.borderWidth = 0.0,
    }) : super(key: key);
 
@@ -22,13 +21,12 @@ class AppButton extends StatelessWidget {
     return FilledButton(
       onPressed: onTap,
       style: FilledButton.styleFrom(
-          minimumSize: const Size(double.infinity,60),
-          backgroundColor: backgroundColor != null? Colors.transparent : AppColor.secondaryColor,
+          fixedSize:  Size(367.w,58.h),
+          backgroundColor: backgroundColor ?? Colors.transparent,
           surfaceTintColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(10.r),
             side: BorderSide(
-              color: borderColor,
               width: borderWidth,
             ),
           )
@@ -46,7 +44,7 @@ class AppButton extends StatelessWidget {
 class PrimaryText extends StatelessWidget {
   final Color? color;
   final String text;
-  double? size = 14;
+  double? size = 14.sp;
   TextOverflow overflow;
   FontWeight? fontWeight;
   TextAlign? textAlign;
@@ -81,14 +79,12 @@ class PrimaryText extends StatelessWidget {
 
 //Teknotes linear gradient text
 class SecondaryText extends StatelessWidget {
-  final Color? color;
   final String text;
-  double? size = 14;
+  double? size = 14.sp;
   TextOverflow overflow;
   FontWeight? fontWeight;
   TextAlign? textAlign;
    SecondaryText({Key? key,
-    this.color = Colors.black,
     required this.text,
     this.overflow = TextOverflow.ellipsis,
     this.size,
@@ -111,7 +107,6 @@ class SecondaryText extends StatelessWidget {
         text,
         textAlign: textAlign,
         style: GoogleFonts.poppins(
-          color: color,
           fontSize: size,
           fontWeight: fontWeight,
         ),
@@ -126,64 +121,59 @@ class SecondaryText extends StatelessWidget {
 
 
 //Teknotes default textfield
-class MyTextField extends StatefulWidget {
+class AppTextField extends StatefulWidget {
   final  TextEditingController? controller;
   final String? hintText;
-  // final String? labelText;
   final Widget? prefixIcon;
   final Widget? sufixIcon;
-  // final bool isPassword;
   final bool obcureText;
   final bool isReadOnly;
-  // final Color? borderColor;
   final TextInputType keyBoardType;
   final String? Function(String?)? validator;
+  final String? Function(String?)? onChanged;
   final bool enable;
 
-  const MyTextField({
+  const AppTextField({
     Key? key,
-    // this.borderColor = Colors.black,
     this.controller,
     this.hintText,
-    // required this.isPassword,
     required this.obcureText,
     required this.isReadOnly,
-    // required this.labelText,
     this.prefixIcon,
     this.sufixIcon,
     required this.keyBoardType,
     this.validator,
+    this.onChanged,
     this.enable = true,
   }) : super(key: key);
 
   @override
-  State<MyTextField> createState() => _MyTextFieldState();
+  State<AppTextField> createState() => _AppTextFieldState();
 }
 
-class _MyTextFieldState extends State<MyTextField> {
+class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: GoogleFonts.poppins(color: Colors.black, fontSize: 14,),
+      onChanged: widget.onChanged,
+      style: TextStyle(color: Colors.black, fontSize: 14.sp,),
       cursorColor: Colors.black,
       controller: widget.controller,
       readOnly: widget.isReadOnly,
       obscureText: widget.obcureText,
       decoration: InputDecoration(
         hintText: widget.hintText,
-        hintStyle: GoogleFonts.poppins(color: Colors.black, fontSize: 11,),
-        // labelText: widget.labelText,
-        // labelStyle: TextStyle(color: Colors.black54, fontSize: 16.sp),
+        hintStyle: GoogleFonts.poppins(color: Colors.black, fontSize: 15.sp, fontWeight: FontWeight.w400),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.sufixIcon,
-        // contentPadding: EdgeInsets.symmetric(vertical: 22, horizontal: 22),
+        contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColor.secondaryColor , width: 1.0),
-          borderRadius: BorderRadius.circular(5),
+          borderSide: const BorderSide( width: 1.0),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColor.secondaryColor, width: 1.0),
-          borderRadius: BorderRadius.circular(5),
+          borderSide: const BorderSide( width: 1.0),
+          borderRadius: BorderRadius.circular(8.r),
         ),
       ),
       validator: widget.validator,
@@ -191,11 +181,7 @@ class _MyTextFieldState extends State<MyTextField> {
   }
 }
 
-
-
-
-
-// Teknotes app background widget
+// Teknotes app Scaffold widget
 class AppScaffold extends StatelessWidget {
   final Widget? floatingActionButton;
   final Widget body;
@@ -205,16 +191,17 @@ class AppScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: 40,
-            bottom: 35,
-            left: 15,
-            right: 15,
-          ),
-          child: body,
-        )
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding:  EdgeInsets.only(
+              top: 137.h - 44.h,
+              left: 24.w,
+              right: 24.w,
+            ),
+            child: body,
+          )
+        ),
       ),
       floatingActionButton: floatingActionButton,
     );

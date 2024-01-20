@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:teknotes/src/view/documentation_2.dart';
-import 'package:teknotes/utils/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:teknotes/common/constants.dart';
+import 'package:teknotes/features/drawing/canvas.dart';
+import 'package:teknotes/features/view/documentation_content.dart';
+
 
 class Documentation extends StatefulWidget {
   const Documentation({Key? key}) : super(key: key);
@@ -10,9 +14,11 @@ class Documentation extends StatefulWidget {
 }
 
 class _DocumentationState extends State<Documentation> {
+  bool _visible = false;
+
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
+    return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,14 +31,14 @@ class _DocumentationState extends State<Documentation> {
                 child: Material(
                   color: AppColor.secondaryColor,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: BorderRadius.circular(2.r),
                   ),
                   child: Container(
-                    padding: EdgeInsets.all(3),
-                    child: const Icon(
+                    padding:  EdgeInsets.all(3.r),
+                    child:  Icon(
                       Icons.arrow_back_outlined,
                       color: Colors.white,
-                      size: 20,
+                      size: 20.sp,
                     ),
                   ),
                 ),
@@ -40,16 +46,20 @@ class _DocumentationState extends State<Documentation> {
               const Spacer(),
               PrimaryText(
                 text: 'Documents Name',
-                size: 20,
+                size: 18.sp,
                 color: AppColor.secondaryColor,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
               const Spacer(flex: 3),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    _visible = !_visible;
+                  });
+                },
                 child: SizedBox(
-                  height: 28,
-                  width: 35,
+                  height: 28.h,
+                  width: 35.w,
                   child: Image.asset(
                     'assets/images/tick.png',
                     fit: BoxFit.fill,
@@ -60,8 +70,8 @@ class _DocumentationState extends State<Documentation> {
               GestureDetector(
                 onTap: () {},
                 child: SizedBox(
-                  height: 28,
-                  width: 28,
+                  height: 28.h,
+                  width: 28.w,
                   child: Image.asset(
                     'assets/images/person.png',
                     fit: BoxFit.fill,
@@ -72,8 +82,8 @@ class _DocumentationState extends State<Documentation> {
               GestureDetector(
                 onTap: () {},
                 child: SizedBox(
-                  height: 28,
-                  width: 7,
+                  height: 28.h,
+                  width: 7.w,
                   child: Image.asset(
                     'assets/images/menu.png',
                     fit: BoxFit.fill,
@@ -82,30 +92,28 @@ class _DocumentationState extends State<Documentation> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Expanded(
-              child: TextFormField(
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                cursorColor: Colors.black,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
+         Expanded(
+           child: Visibility(
+    visible: _visible,
+    child: _visible ? DrawingRoomScreen() : TextFormField(
+               keyboardType: TextInputType.multiline,
+      maxLines: null,
+      cursorColor: Colors.black,
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+                    hintText: 'Start here...',
+                    hintStyle: GoogleFonts.poppins(color: Colors.black, fontSize: 15.sp, fontWeight: FontWeight.w400),
+                  border: InputBorder.none
                 ),
-              ),
-            ),
-          )
+             ),
+           ),
+         ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const Documentation2()),
-              (route) => false);
+
+           Navigator.push(context, MaterialPageRoute(builder: (context)=> const Documentation2()));
         },
         elevation: 2,
         child: Image.asset(
